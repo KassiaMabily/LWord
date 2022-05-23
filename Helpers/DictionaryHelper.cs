@@ -11,7 +11,7 @@ namespace LWord.Helpers
 {
     class DictionaryHelper
     {
-        public static int DICTIONARY_SIZE = 10;
+        public static int DICTIONARY_SIZE = 5000;
         public static string DICTIONARY_FILENAME = @"dictionary.txt";
         public static Node[] DICTIONARY = new Node[DICTIONARY_SIZE];
 

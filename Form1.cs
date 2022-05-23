@@ -10,14 +10,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static LWord.Helpers.DictionaryHelper;
 using static LWord.Helpers.Utils;
+using static LWord.Helpers.FileHelper;
 
 namespace LWord
 {
     public partial class Form1 : Form
-    {
-        private OpenFileDialog openFileDialog = new OpenFileDialog();
-        
-
+    {        
         public Form1()
         {
             InitializeComponent();
@@ -25,8 +23,6 @@ namespace LWord
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.richTextBox1.Text = "111 Olá mundo!!";
-
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             openFileDialog1.Title = "Abrir dicionário";
@@ -52,10 +48,9 @@ namespace LWord
 
         private void abrirToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if(openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                Console.WriteLine("Entrei");
-            }
+            string content = OpenFile();
+            richTextBox1.Text = content;
+            LoadText(richTextBox1);
         }
 
         private void richTextBox1_MouseDown(object sender, MouseEventArgs e)
@@ -125,6 +120,17 @@ namespace LWord
                 CheckWordExists(lastWord, richTextBox1);
             }
 
+        }
+
+        private void salvarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile(richTextBox1.Text);
+        }
+
+        private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateFile();
+            richTextBox1.Text = "";
         }
     }
 }
