@@ -9,12 +9,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace LWord
+namespace LWord.Helpers
 {
     public static class Utils
     {
-        public static int DICTIONARY_SIZE = 10;
-
         public static void HighlightText(this RichTextBox myRtb, string word, Color color)
         {
 
@@ -51,40 +49,6 @@ namespace LWord
             return total % size;
         }
 
-        public static Node[] ReadDictionary()
-        {
-            
-            Node[] dictionary = new Node[DICTIONARY_SIZE];
-
-            string file = "dictionary.txt";
-
-            // Verifica se o arquivo não existe
-            if (!File.Exists(file))
-            {
-                Debug.WriteLine(String.Format("Arquivo {0} não existe", file));
-                return dictionary;
-            }
-
-            string[] lines = File.ReadAllLines(file);
-            foreach (var line in lines)
-            {
-                int hashCode = HashFunction(line, DICTIONARY_SIZE);
-                if (dictionary[hashCode] == null)
-                {
-                    Node newNode = new Node(line, null, null);
-                    dictionary[hashCode] = newNode;
-                }
-
-                else
-                {
-                    dictionary[hashCode].insertOrdenate(line);
-                }
-                
-            }
-
-            return dictionary;
-        }
-
         public static string NormalizeString(string text)
         {
             foreach (var chr in new string[] { "(", ")", "!", "@", "#", "[", "]", "?" })
@@ -114,33 +78,6 @@ namespace LWord
                 .ToString()
                 .Normalize(NormalizationForm.FormC);
         }
-
-
-        public static void CheckWord(string word, Node[] dictionary, RichTextBox richTextBox)
-        {
-            // Ignorar textos que forem digitos
-            if (!int.TryParse(word, out _))
-            {
-                string normalizedWord = NormalizeString(RemoveDiacritics(word));
-                int hashCode = HashFunction(normalizedWord, DICTIONARY_SIZE);
-
-                if (dictionary[hashCode] == null)
-                {
-                    HighlightText(richTextBox, NormalizeString(word), Color.Red);
-                }
-
-                else
-                {
-                    Node node = dictionary[hashCode].find(normalizedWord);
-
-                    if (node.getElement() == null)
-                    {
-                        HighlightText(richTextBox, NormalizeString(word), Color.Red);
-                    }
-                }
-            }
-        } 
-
 
     }
 }

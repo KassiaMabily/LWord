@@ -8,14 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static LWord.Utils;
+using static LWord.Helpers.DictionaryHelper;
+using static LWord.Helpers.Utils;
 
 namespace LWord
 {
     public partial class Form1 : Form
     {
         private OpenFileDialog openFileDialog = new OpenFileDialog();
-        private Node[] dictionary = new Node[Utils.DICTIONARY_SIZE];
+        
 
         public Form1()
         {
@@ -26,26 +27,28 @@ namespace LWord
         {
             this.richTextBox1.Text = "111 Olá mundo!!";
 
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.Title = "Abrir dicionário";
+            DialogResult res = openFileDialog1.ShowDialog();
 
-            // Utils.HighlightText(this.richTextBox1, "Hello", Color.Red);
-
-            dictionary = Utils.ReadDictionary();
-
-            LoadText(this.richTextBox1.ToString());
-        }
-
-        private void LoadText(string text)
-        {
-            string[] words = text.Split(" ");
-
-            for (int i = 2; i < words.Length; i++)
+            if (res == DialogResult.OK)
             {
-                CheckWord(words[i], dictionary, this.richTextBox1);
+                setDictionaryFilename(openFileDialog1.FileName);
+
+                bool isDictionaryLoaded = LoadDictionary();
+
+                if (!isDictionaryLoaded) MessageBox.Show("Não foi possível carregar as palavras do arquivo selecionado");
+
+                LoadText(richTextBox1);
             }
+
+            //if (res == DialogResult.Cancel)
+            //{
+            //    MessageBox.Show("Não foi possível carregar as palavras do arquivo selecionado");
+            //}
+
         }
-
-
-
 
         private void abrirToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -54,7 +57,6 @@ namespace LWord
                 Console.WriteLine("Entrei");
             }
         }
-
 
         private void richTextBox1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -90,15 +92,16 @@ namespace LWord
                         Debug.WriteLine(string.Format("Deseja adicionar a palavra {0} no dicionário?", richTextBox1.SelectedText.ToLower()));
 
                         DialogResult res = MessageBox.Show(string.Format("Deseja adicionar a palavra {0} no dicionário?", richTextBox1.SelectedText.ToLower()), "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        
                         if (res == DialogResult.OK)
                         {
-                            MessageBox.Show("You have clicked Ok Button");
-                            //Some task…
+                            string newWord = RemoveDiacritics(NormalizeString(richTextBox1.SelectedText.ToLower()));
+                            InsertWordToDictionaryFile(newWord);
+                            CheckWordExists(newWord, richTextBox1);
                         }
                         if (res == DialogResult.Cancel)
                         {
-                            MessageBox.Show("You have clicked Cancel Button");
-                            //Some task…
+                            Debug.WriteLine("You have clicked Cancel Button");
                         }
                     }
                     else
@@ -119,7 +122,7 @@ namespace LWord
                 string[] words = richTextBox1.Text.Split(" ");
                 string lastWord = words[words.Length - 2];
 
-                CheckWord(lastWord, dictionary, richTextBox1);
+                CheckWordExists(lastWord, richTextBox1);
             }
 
         }
