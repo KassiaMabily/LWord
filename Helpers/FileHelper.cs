@@ -77,5 +77,18 @@ namespace LWord.Helpers
 
             return content;
         }
+
+        public static string FindFileByName(string partialName) {
+            string fileName = "";
+
+            DirectoryInfo hdDirectoryInWhichToSearch = new DirectoryInfo("..\\..\\..\\");
+            FileInfo[] filesInDir = hdDirectoryInWhichToSearch.GetFiles("*" + partialName + "*.*");
+
+            foreach (FileInfo foundFile in filesInDir) {
+                fileName = foundFile.FullName;
+            }
+
+            return fileName;
+        }
     }
 }

@@ -25,6 +25,8 @@ namespace LWord.Helpers
             FileStream myFile = new FileStream(DICTIONARY_FILENAME, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader sw = new StreamReader(myFile, Encoding.UTF8);
 
+            
+
 
             // Verifica se o arquivo não existe
             if (!File.Exists(DICTIONARY_FILENAME))
@@ -78,8 +80,10 @@ namespace LWord.Helpers
 
         public static bool CheckWordExists(string word, RichTextBox richTextBox)
         {
+            string[] ignoredWords = new string[] { "de", "da", "do", "a", "e", "o", "as", "os" };
+
             // Ignorar textos que forem digitos
-            if (!int.TryParse(word, out _))
+            if (!int.TryParse(word, out _) && !SearchValue(ignoredWords, word))
             {
                 string normalizedWord = NormalizeString(RemoveDiacritics(word));
                 int hashCode = HashFunction(normalizedWord, DICTIONARY_SIZE);

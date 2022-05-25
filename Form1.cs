@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using static LWord.Helpers.DictionaryHelper;
 using static LWord.Helpers.Utils;
 using static LWord.Helpers.FileHelper;
+using System.IO;
 
 namespace LWord
 {
@@ -22,28 +23,14 @@ namespace LWord
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            openFileDialog1.Title = "Abrir dicionário";
-            DialogResult res = openFileDialog1.ShowDialog();
+        {   
+            setDictionaryFilename(FindFileByName("dictionary"));
 
-            if (res == DialogResult.OK)
-            {
-                setDictionaryFilename(openFileDialog1.FileName);
+            bool isDictionaryLoaded = LoadDictionary();
 
-                bool isDictionaryLoaded = LoadDictionary();
+            if (!isDictionaryLoaded) MessageBox.Show("Não foi possível carregar as palavras do arquivo selecionado");
 
-                if (!isDictionaryLoaded) MessageBox.Show("Não foi possível carregar as palavras do arquivo selecionado");
-
-                LoadText(richTextBox1);
-            }
-
-            //if (res == DialogResult.Cancel)
-            //{
-            //    MessageBox.Show("Não foi possível carregar as palavras do arquivo selecionado");
-            //}
-
+            LoadText(richTextBox1);
         }
 
         private void abrirToolStripMenuItem1_Click(object sender, EventArgs e)

@@ -51,12 +51,28 @@ namespace LWord.Helpers
 
         public static string NormalizeString(string text)
         {
-            foreach (var chr in new string[] { "(", ")", "!", "@", "#", "[", "]", "?" })
-            {
-                text = text.Replace(chr, "");
+            string newText = Regex.Replace(text, @"[^a-zA-Z-]", "");
+            if (newText.EndsWith("-")) {
+                newText = Regex.Replace(newText, @"[-]", "");
+            }
+            //foreach (var chr in new string[] { "(", ")", "!", "@", "#", "[", "]", "?" })
+            //{
+            //    text = text.Replace(chr, "");
+            //}
+
+            return newText;
+        }
+
+        public static bool SearchValue(string[] array, string value) {
+            bool isFounded = false;
+
+            foreach (var item in array) {
+                if (item == value) {
+                    isFounded = true;
+                }
             }
 
-            return text;
+            return isFounded;
         }
 
         public static string RemoveDiacritics(string text)
