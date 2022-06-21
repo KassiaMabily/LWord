@@ -50,8 +50,8 @@ $ git clone https://github.com/LWord/app.git
             </a>
             <br/>
 
-[![Linkedin Badge](https://img.shields.io/badge/-Kassia-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/kassia-fraga-178b7b1a7/)](https://www.linkedin.com/in/kassia-fraga-178b7b1a7/) 
-[<img src = "https://img.shields.io/badge/@kassia.mabily-%23E4405F.svg?&style=flat-square&logo=instagram&logoColor=white">](https://www.instagram.com/kassia.mabily/)
+[![Linkedin Badge](https://img.shields.io/badge/-Kassia-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/kassia-fraga/)](https://www.linkedin.com/in/kassia-fraga/) 
+[<img src = "https://img.shields.io/badge/@dev.naotaosedentaria-%23E4405F.svg?&style=flat-square&logo=instagram&logoColor=white">](https://www.instagram.com/dev.naotaosedentaria/)
 [![Gmail Badge](https://img.shields.io/badge/-kassiafraga7@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:kassiafraga7@gmail.com)](mailto:kassiafraga7@gmail.com)
         </p>
     </td>
